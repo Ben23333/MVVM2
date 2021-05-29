@@ -1,0 +1,78 @@
+package com.benone.mvvm2.data.http
+
+import com.benone.mvvm2.model.*
+import io.reactivex.Observable
+import retrofit2.http.GET
+import retrofit2.http.Path
+import retrofit2.http.Query
+
+/**
+ * DATE: 2021/5/29
+ */
+interface WanApi {
+
+    /**
+     * 首页文章列表
+     */
+    @GET("article/list/{pageNo}/json")
+    fun getArticles(@Path("pageNo") pageNo: Int): Observable<HttpResponse<Page<Article>>>
+
+    /**
+     * 置顶文章列表
+     */
+    @GET("article/top/json")
+    fun getTopArticles(): Observable<HttpResponse<List<Article>>>
+
+    /**
+     * 首页banner
+     */
+    @GET("banner/json")
+    fun getBanner(): Observable<HttpResponse<List<Banner>>>
+
+    /**
+     * 公众号列表
+     */
+    @GET("wxarticle/chapters/json")
+    fun getWXChapters(): Observable<HttpResponse<List<Chapter>>>
+
+    /**
+     * 查看某个公众号历史记录
+     */
+    @GET("wxarticle/list/{id}/{pageNo}/json")
+    fun getWXArticles(@Path("id") id: Int,@Path("pageNo") pageNo:Int):Observable<HttpResponse<Page<Article>>>
+
+    /**
+     * 项目类目列表
+     */
+    @GET("project/tree/json")
+    fun getProjects():Observable<HttpResponse<List<Chapter>>>
+
+    /**
+     * 项目文章列表
+     */
+    @GET("project/list/{pageNo}/json")
+    fun getProjectArticles(@Path("pageNo") pageNo: Int,@Query("cid")cid:Int):Observable<HttpResponse<Page<Article>>>
+
+    /**
+     * 导航数据
+     */
+    @GET("navi/json")
+    fun getProjectArticles():Observable<HttpResponse<List<Navigation>>>
+
+    /**
+     * 知识体系
+     */
+    @GET("tree/json")
+    fun getKnowledgeTree():Observable<HttpResponse<List<Chapter>>>
+
+
+    /**
+     * 知识体系文章列表
+     */
+    @GET("article/list/{pageNo}/json")
+    fun getKnowledgeArticles(@Path("pageNo")pageNo: Int,@Query("cid")cid: Int):Observable<HttpResponse<Page<Article>>>
+
+
+
+
+}
