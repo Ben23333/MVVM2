@@ -3,6 +3,9 @@ package com.benone.mvvm2.data.http
 import com.benone.mvvm2.BuildConfig
 import com.benone.mvvm2.HttpConstants
 import com.benone.mvvm2.WanApplication
+import com.benone.mvvm2.data.http.interceptor.CacheInterceptor
+import com.benone.mvvm2.data.http.interceptor.CookieInterceptor
+import com.benone.mvvm2.data.http.interceptor.HeaderInterceptor
 import com.benone.mvvm2.data.http.interceptor.LoggingInterceptor
 import com.orhanobut.logger.Logger
 import okhttp3.Cache
@@ -65,8 +68,8 @@ class HttpManager private constructor() {
         ).writeTimeout(
             HttpConstants.NETWORK_TIME.toLong(),
             TimeUnit.SECONDS
-        ).retryOnConnectionFailure(true).addInterceptor(HeaderInteceptor())
-            .addInterceptor(CacheInterceptor()).addInterceptor(CookieInteceptor())
+        ).retryOnConnectionFailure(true).addInterceptor(HeaderInterceptor())
+            .addInterceptor(CacheInterceptor()).addInterceptor(CookieInterceptor())
             .addInterceptor(loggingInterceptor).cache(cache)
         return builder.build()
 
