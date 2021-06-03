@@ -67,7 +67,7 @@ abstract class BaseActivity : AppCompatActivity() {
                 } else {
                     multipleStatusView?.showEmpty()
                 }
-            } else if (result.isERROR()) {
+            } else if (result.isError()) {
                 multipleStatusView?.showError()
             }
         })

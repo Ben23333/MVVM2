@@ -57,7 +57,7 @@ class ProjectArticleFragment(private val projectId: Int) : BaseFragment() {
                     }else{
                         multipleStatusView?.showContent()
                     }
-                    it.isERROR()->multipleStatusView?.showError()
+                    it.isError()->multipleStatusView?.showError()
                 }
             })
             networkState.observe(viewLifecycleOwner, Observer {

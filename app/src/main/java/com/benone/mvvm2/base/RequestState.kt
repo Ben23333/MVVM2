@@ -17,5 +17,5 @@ data class RequestState<out T>(val status:Status,val data:T?,val message:String?
 
     fun isLoading():Boolean = status==Status.LOADING
     fun isSuccess():Boolean = status==Status.SUCCESS
-    fun isERROR():Boolean = status==Status.ERROR
+    fun isError():Boolean = status==Status.ERROR
 }

@@ -64,11 +64,11 @@ class HomeAdapter(retryCallback:()->Unit): BasePagingAdapter<Article>(diffCallba
             }
         }
         holder.itemView.setOnClickListener {
-            Intent(context,WebActivity::class.java).run {
-                putExtra(Constants.WEB_TITLE,item.title)
-                putExtra(Constants.WEB_URL,item.link)
-                context.startActivity(this)
-            }
+//            Intent(context,WebActivity::class.java).run {
+//                putExtra(Constants.WEB_TITLE,item.title)
+//                putExtra(Constants.WEB_URL,item.link)
+//                context.startActivity(this)
+//            }
         }
     }
 
@@ -104,11 +104,11 @@ class HomeAdapter(retryCallback:()->Unit): BasePagingAdapter<Article>(diffCallba
                 setDelegate { _, _, _, position ->
                     if(bannerData.isNotEmpty()){
                         val item = bannerData[position]
-                        Intent(context,WebActivity::class.java).run{
-                            putExtra(Constants.WEB_TITLE, item.title)
-                            putExtra(Constants.WEB_URL, item.url)
-                            context.startActivity(this)
-                        }
+//                        Intent(context,WebActivity::class.java).run{
+//                            putExtra(Constants.WEB_TITLE, item.title)
+//                            putExtra(Constants.WEB_URL, item.url)
+//                            context.startActivity(this)
+//                        }
                     }
                 }
                 val imageList = ArrayList<String>()

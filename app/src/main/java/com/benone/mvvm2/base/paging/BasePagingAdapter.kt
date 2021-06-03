@@ -75,7 +75,7 @@ abstract class BasePagingAdapter<T>(
 
         fun bindTo(requestState:RequestState<Any>?){
             toVisibility(R.id.progress_bar,requestState!!.isLoading())
-            toVisibility(R.id.retry_button,requestState.isERROR())
+            toVisibility(R.id.retry_button,requestState.isError())
             toVisibility(R.id.msg,requestState.isLoading())
             setText(R.id.msg,"加载中")
         }

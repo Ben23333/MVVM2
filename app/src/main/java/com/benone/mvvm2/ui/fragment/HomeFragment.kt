@@ -1,5 +1,6 @@
 package com.benone.mvvm2.ui.fragment
 
+import android.graphics.Color
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -42,8 +43,48 @@ class HomeFragment : BaseFragment() {
             pagedList.observe(viewLifecycleOwner, Observer {
                 adapter.submitList(it)
             })
+            refreshState.observe(viewLifecycleOwner, Observer {
+                swipeRefreshLayout.isRefreshing = false
+                when{
+                    it.isLoading()->
+                        if(isRefreshFromPull){
+                            swipeRefreshLayout.isRefreshing = true
+                            isRefreshFromPull = false
+                        }else{
+                            multipleStatusView?.showLoading()
+                        }
+                    it.isSuccess()->
+                        if(it.data!!){
+                            multipleStatusView?.showEmpty()
+                        }else{
+                            multipleStatusView?.showContent()
+                        }
+                    it.isError()->
+                        multipleStatusView?.showError()
+                }
+            })
+            networkState.observe(viewLifecycleOwner, Observer {
+                adapter.setRequestState(it)
+            })
+            initLoad()
 
         }
+    }
+
+    override fun onRetry() {
+        viewModel.refresh()
+    }
+
+    private fun initSwipe(){
+        swipeRefreshLayout.setColorSchemeColors(Color.RED,Color.GREEN,Color.BLUE)
+        swipeRefreshLayout.setOnRefreshListener {
+            isRefreshFromPull = true
+            viewModel.refresh()
+        }
+    }
+
+    private fun initRecyclerView(){
+        recycleView.adapter = adapter
     }
 
 }

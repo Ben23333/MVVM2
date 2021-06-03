@@ -70,7 +70,7 @@ abstract class BaseFragment : Fragment() {
                 } else {
                     multipleStatusView?.showEmpty()
                 }
-            } else if (result.isERROR()) {
+            } else if (result.isError()) {
                 multipleStatusView?.showError()
             }
         })
