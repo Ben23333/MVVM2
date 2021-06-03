@@ -25,7 +25,7 @@ data class Article(
     var fresh: Boolean,
     var id: Int,
     var link: String,
-    var niceData: String,
+    var niceDate: String,
     var origin: String,
     var projectLink: String,
     var publishTime: Long,

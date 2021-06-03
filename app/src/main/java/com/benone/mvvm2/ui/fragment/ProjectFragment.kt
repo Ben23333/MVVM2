@@ -21,7 +21,7 @@ class ProjectFragment: BaseFragment() {
                 return ProjectViewModel(repository) as T
             }
 
-        })
+        }).get(ProjectViewModel::class.java)
     }
 
     private val adapter by lazy{
@@ -35,11 +35,29 @@ class ProjectFragment: BaseFragment() {
         viewPager.adapter = adapter
         (tabLayout as TabLayout).run{
             setupWithViewPager(viewPager)
+            addOnTabSelectedListener(object:TabLayout.OnTabSelectedListener{
+                override fun onTabSelected(tab: TabLayout.Tab?) {
+
+                }
+
+                override fun onTabUnselected(tab: TabLayout.Tab?) {
+
+                }
+
+                override fun onTabReselected(tab: TabLayout.Tab?) {
+                    tab?.let {
+                        viewPager.setCurrentItem(it.position,false)
+                    }
+                }
+
+            })
         }
     }
 
     override fun subscribeUi() {
-        TODO("Not yet implemented")
+        handleData(viewModel.projects){
+            adapter.setData(it)
+        }
     }
 
 }

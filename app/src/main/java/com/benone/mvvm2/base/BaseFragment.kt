@@ -58,7 +58,7 @@ abstract class BaseFragment : Fragment() {
     }
 
     protected fun <T> handleData(
-        liveData: LiveData<RequestState<T>>, action: ((T?) -> Unit)
+        liveData: LiveData<RequestState<T>>, action: ((T) -> Unit)
     ) =
         liveData.observe(this, Observer { result ->
             if (result.isLoading()) {

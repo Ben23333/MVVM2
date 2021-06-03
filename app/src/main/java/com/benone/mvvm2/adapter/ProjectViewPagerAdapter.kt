@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
 import com.benone.mvvm2.model.Chapter
+import com.benone.mvvm2.ui.fragment.ProjectArticleFragment
 
 class ProjectViewPagerAdapter(fm:FragmentManager):FragmentStatePagerAdapter(fm) {
 

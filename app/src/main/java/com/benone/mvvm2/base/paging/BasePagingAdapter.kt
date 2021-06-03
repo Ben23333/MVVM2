@@ -26,6 +26,14 @@ abstract class BasePagingAdapter<T>(
         return when(viewType){
             TYPE_ITEM->ViewHolder(LayoutInflater.from(context).inflate(getItemLayout(),parent,false))
             TYPE_FOOTER->FooterViewHolder.create(parent,retryCallback)
+            else->throw IllegalArgumentException("未知 view type = $viewType")
+        }
+    }
+
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        when(getItemViewType(position)){
+            TYPE_ITEM -> bind(holder, getItem(position)!!,position)
+            TYPE_FOOTER -> (holder as FooterViewHolder).bindTo(requestState)
         }
     }
 
@@ -71,7 +79,50 @@ abstract class BasePagingAdapter<T>(
             toVisibility(R.id.msg,requestState.isLoading())
             setText(R.id.msg,"加载中")
         }
+
+        companion object{
+            fun create(parent: ViewGroup,retryCallback: () -> Unit):FooterViewHolder{
+                val view = LayoutInflater.from(parent.context).inflate(R.layout.footer_item,parent,false)
+                return FooterViewHolder(view,retryCallback)
+            }
+        }
+    }
+
+    private fun hasFooter()=if(requestState==null){
+        false
+    }else{
+        !requestState?.isSuccess()!!
+    }
+
+    override fun getItemViewType(position: Int): Int {
+        return if(hasFooter()&&position==itemCount - 1){
+            TYPE_FOOTER
+        }else{
+            TYPE_ITEM
+        }
+    }
+
+    override fun getItemCount(): Int {
+        return super.getItemCount()+if(hasFooter()) 1 else 0
+    }
+
+    fun setRequestState(newRequestState:RequestState<Any>){
+        val previousState = this.requestState
+        val hadExtraRow = hasFooter()
+        this.requestState = newRequestState
+        val hasExtraRow = hasFooter()
+        if(hadExtraRow!=hasExtraRow){
+            if(hadExtraRow){
+                notifyItemRemoved(super.getItemCount())
+            }else{
+                notifyItemInserted(super.getItemCount())
+            }
+        }else if(hasExtraRow && previousState!=newRequestState){
+            notifyItemChanged(itemCount -1)
+        }
     }
 
     abstract fun getItemLayout(): Int
+
+    abstract fun bind(holder:ViewHolder,item:T,position: Int)
 }
